@@ -3,18 +3,10 @@ import PropTypes from 'prop-types';
 import api from '../../services/api';
 
 export default class Repository extends Component {
-  // static propTypes = {
-  //   match: PropTypes.shape({
-  //     params: PropTypes.shape({ repository: PropTypes.string }),
-  //   }).isRequired(),
-  // };
-
   static propTypes = {
     match: PropTypes.shape({
-      params: PropTypes.shape({
-        repository: PropTypes.string,
-      }),
-    }).isRequired(),
+      params: PropTypes.shape({ repository: PropTypes.string }),
+    }).isRequired,
   };
 
   state = {
@@ -24,8 +16,8 @@ export default class Repository extends Component {
   };
 
   async componentDidMount() {
-    const { params } = this.props.match;
-    const decodedName = decodeURIComponent(params.repository);
+    const { match } = this.props;
+    const decodedName = decodeURIComponent(match.params.repository);
 
     const [repository, issues] = await Promise.all([
       api.get(`repos/${decodedName}`),
